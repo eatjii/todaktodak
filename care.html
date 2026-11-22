@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>챙기기 — 토닥토닥</title>
+  <link rel="icon" href="assets/symbol-heart.png" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/sub.css" />
+  <link rel="stylesheet" href="css/today.css" />
+  <link rel="stylesheet" href="css/care.css" />
+  <script src="js/store.js"></script>
+  <script>if (!TodakStore.currentUser()) location.replace("index.html#login");</script>
+</head>
+<body data-page="care" class="page-soft">
+  <header class="topbar sub-top">
+    <a class="btn btn-outline home-btn" href="main.html">← 메인으로</a>
+    <time class="clock" id="clock">7:57 AM</time>
+    <span></span>
+  </header>
+
+  <main class="today care">
+    <!-- 머리말 -->
+    <section class="today-hero">
+      <span class="hero-badge"><img src="assets/icons/hand-clasp-pink.svg" alt="" /></span>
+      <h1>챙기기</h1>
+      <p class="hero-q">오늘 나를 얼마나 챙겼나요?</p>
+      <p class="lead">거창한 요리가 아니어도 괜찮아요. 한 숟갈이라도 챙겨 먹고 물 한 잔 마신 것이 일상을 되찾는 시작이에요.</p>
+      <div class="care-sum" id="care-sum" aria-live="polite"></div>
+    </section>
+
+    <!-- 0. 수면 -->
+    <section class="card sleep-card" aria-labelledby="sleep-title">
+      <div class="card-top">
+        <div>
+          <h2 id="sleep-title">😴 어젯밤 수면</h2>
+          <p class="act-reason">대략 몇 시간 잤는지 남겨 주세요. 정확하지 않아도 괜찮아요.</p>
+        </div>
+        <span class="count-pill" id="sleep-pill">0시간</span>
+      </div>
+      <div class="sleep-slider">
+        <input type="range" id="sleep-hours" min="0" max="12" step="0.5" value="0" aria-label="잔 시간" />
+        <div class="sleep-scale" aria-hidden="true"><span>0시간</span><span>7~8시간</span><span>12시간</span></div>
+      </div>
+      <p class="sleep-comment" id="sleep-comment"></p>
+      <p class="q-label sleep-q">잠은 어땠나요?</p>
+      <div class="quality" id="quality" role="radiogroup" aria-label="잠의 질">
+        <button type="button" role="radio" aria-checked="false" data-q="good"><span>😊</span>푹 잤어요</button>
+        <button type="button" role="radio" aria-checked="false" data-q="ok"><span>😐</span>그럭저럭</button>
+        <button type="button" role="radio" aria-checked="false" data-q="bad"><span>😣</span>뒤척였어요</button>
+      </div>
+      <button type="button" class="btn btn-fill save-btn" id="sleep-save">기록하기</button>
+      <p class="water-note" id="sleep-note" role="status"></p>
+    </section>
+
+    <!-- 1. 삼시세끼 -->
+    <section class="card meal-card" aria-labelledby="meal-title">
+      <div class="card-top">
+        <div>
+          <h2 id="meal-title">🍚 삼시세끼 체크</h2>
+          <p class="act-reason">먹었으면 동그라미를 눌러 주세요. 무엇을 먹었는지는 적고 싶을 때만 적어도 돼요.</p>
+        </div>
+        <span class="count-pill" id="meal-count">0 / 3끼</span>
+      </div>
+      <ul class="meals" id="meals"></ul>
+      <div class="celebrate" id="celebrate" role="status" hidden>
+        <img src="assets/icons/hand-high-five-pink.svg" alt="" />
+        <div><b>오늘 세 끼를 모두 챙겼어요!</b><p>나를 잘 돌본 하루예요. 정말 대단해요.</p></div>
+      </div>
+      <p class="tip">💡 식사를 거르면 몸에 힘이 더 빠지기 쉬워요. 삼각김밥이나 두유 하나라도 괜찮아요.</p>
+    </section>
+
+    <!-- 2. 물 -->
+    <section class="card water-card" aria-labelledby="water-title">
+      <div class="card-top">
+        <div>
+          <h2 id="water-title">💧 오늘 마신 물</h2>
+          <p class="act-reason">한 잔은 200ml예요. 목마르기 전에 천천히 마셔요.</p>
+        </div>
+        <span class="count-pill" id="water-ml">0ml</span>
+      </div>
+      <div class="cups" id="cups" aria-hidden="true"></div>
+      <div class="water-ctrl">
+        <button type="button" class="round" id="w-minus" aria-label="한 잔 빼기">−</button>
+        <div class="water-num"><b id="w-num">0</b>잔</div>
+        <button type="button" class="round plus" id="w-plus" aria-label="한 잔 더하기">+</button>
+      </div>
+      <button type="button" class="btn btn-fill save-btn" id="w-done">완료</button>
+      <p class="water-note" id="w-note" role="status"></p>
+    </section>
+
+    <!-- 3. 복약 (복약 기능을 켠 사람에게만 보여요) -->
+    <section class="card med-card" id="med-card" aria-labelledby="med-title" hidden>
+      <div class="card-top">
+        <div>
+          <h2 id="med-title">💊 오늘의 복약</h2>
+          <p class="act-reason">먹었는지 가볍게 남겨 두면 돼요. 한 번 놓쳐도 괜찮아요, 다음 시간부터 다시 하면 돼요.</p>
+        </div>
+        <div class="med-head-right">
+          <span class="count-pill" id="med-count"></span>
+          <button type="button" class="btn btn-outline small" id="med-edit-btn" aria-expanded="false">시간 바꾸기</button>
+        </div>
+      </div>
+      <div class="med-edit" id="med-edit" hidden>
+        <p class="med-edit-title">내 복약 시간 <small>메인 프로필의 '복약 시간 설정'과 같은 설정이에요</small></p>
+        <div id="med-editor"></div>
+        <div class="med-edit-btns">
+          <button type="button" class="btn btn-outline" id="med-cancel">취소</button>
+          <button type="button" class="btn btn-fill" id="med-save">저장하기</button>
+        </div>
+      </div>
+      <ul class="meds" id="meds"></ul>
+    </section>
+    <p class="med-off" id="med-off" hidden>복약 기록이 필요하면 메인 화면 오른쪽 위 프로필의 '복약 시간 설정'에서 켤 수 있어요.</p>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="js/common.js"></script>
+  <script src="js/med.js"></script>
+  <script src="js/care.js"></script>
+</body>
+</html>

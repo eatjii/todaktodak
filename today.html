@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>오늘의 나 — 토닥토닥</title>
+  <link rel="icon" href="assets/symbol-heart.png" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/sub.css" />
+  <link rel="stylesheet" href="css/today.css" />
+  <script src="js/store.js"></script>
+  <script>if (!TodakStore.currentUser()) location.replace("index.html#login");</script>
+</head>
+<body data-page="today" class="page-soft">
+  <header class="topbar sub-top">
+    <a class="btn btn-outline home-btn" href="main.html">← 메인으로</a>
+    <time class="clock" id="clock">7:57 AM</time>
+    <span></span>
+  </header>
+
+  <main class="today">
+    <!-- 머리말 -->
+    <section class="today-hero">
+      <span class="hero-badge"><img src="assets/icons/hand-ok.svg" alt="" /></span>
+      <h1>오늘의 나</h1>
+      <p class="hero-q">오늘 내 마음과 에너지는 어떤가요?</p>
+      <p class="lead">기록한다고 바로 나아져야 하는 건 아니에요. 지금 상태를 있는 그대로 알아주는 것부터가 시작이에요.</p>
+    </section>
+
+    <!-- 1. 하루 에너지 단계 -->
+    <section class="day" aria-labelledby="day-title">
+      <h2 class="sr-only" id="day-title">오늘 하루 에너지</h2>
+      <ol class="stepper" id="slots"></ol>
+      <p class="day-summary" id="day-summary"></p>
+    </section>
+
+    <!-- 2. 상태 기록 (말풍선 꼬리가 고른 시간대를 가리켜요) -->
+    <section class="card check-card" id="check" aria-labelledby="check-title">
+      <div class="card-top">
+        <h2 id="check-title"><span class="slot-tag" id="slot-tag">아침</span> 상태 기록하기</h2>
+      </div>
+
+      <form id="check-form" novalidate>
+        <fieldset class="q">
+          <legend><b>1</b> 지금 기분에 가장 가까운 날씨를 골라 주세요</legend>
+          <p class="q-hint">정답은 없어요. 느낌대로 골라도 괜찮아요.</p>
+          <div class="moods" id="moods"></div>
+        </fieldset>
+
+        <fieldset class="q">
+          <legend><b>2</b> 몸의 에너지 <span class="lv-now" id="energy-now"></span></legend>
+          <div class="levels" id="energy" data-kind="energy"></div>
+        </fieldset>
+
+        <fieldset class="q">
+          <legend><b>3</b> 집중력 <span class="lv-now" id="focus-now"></span></legend>
+          <div class="levels" id="focus" data-kind="focus"></div>
+        </fieldset>
+
+        <div class="q">
+          <label class="q-label" for="memo"><b>4</b> 나에게 남기는 한 줄 <small>(선택)</small></label>
+          <input type="text" id="memo" maxlength="60" placeholder="예) 어젯밤 늦게 자서 몸이 무거워요" />
+        </div>
+
+        <p class="form-note" id="form-note" role="status"></p>
+        <button class="btn btn-fill save-btn" type="submit" id="save-btn">기록하기</button>
+      </form>
+    </section>
+
+    <!-- 3. 작은 행동 추천 -->
+    <section class="card act-card" id="acts" aria-labelledby="act-title">
+      <div class="card-top">
+        <div>
+          <h2 id="act-title">지금 해 볼 만한 작은 행동</h2>
+          <p class="act-reason" id="act-reason"></p>
+        </div>
+        <button type="button" class="btn btn-outline small" id="shuffle">다른 거 보기</button>
+      </div>
+      <ul class="acts" id="act-list"></ul>
+
+      <form class="custom" id="custom-form" novalidate>
+        <label class="q-label" for="custom-text">✏️ 직접 적기 <small>내가 하고 싶은 작은 행동</small></label>
+        <div class="custom-row2">
+          <input type="text" id="custom-text" maxlength="30" placeholder="예) 좋아하는 차 한 잔 우리기" />
+          <select id="custom-time" aria-label="걸리는 시간">
+            <option value="60">1분</option>
+            <option value="180" selected>3분</option>
+            <option value="300">5분</option>
+            <option value="600">10분</option>
+            <option value="900">15분</option>
+            <option value="1800">30분</option>
+          </select>
+          <button class="btn btn-fill" type="submit">추가하기</button>
+        </div>
+        <p class="custom-hint">추가한 행동은 비슷한 에너지일 때 다시 추천해 드려요.</p>
+      </form>
+
+      <div class="done-box" id="done-box" hidden>
+        <h3>오늘 해낸 작은 행동</h3>
+        <ul id="done-list"></ul>
+      </div>
+    </section>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="js/common.js"></script>
+  <script src="js/weather.js"></script>
+  <script src="js/actions.js"></script>
+  <script src="js/today.js"></script>
+</body>
+</html>

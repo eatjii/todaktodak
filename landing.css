@@ -1,0 +1,154 @@
+/* =========================================================
+   로그인 전 메인 (07번 시안)
+   ========================================================= */
+
+.landing {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100svh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---------- 오른쪽 위: 회원가입 / 로그인 + 떠 있는 손 ---------- */
+.auth {
+  justify-self: end;
+  display: flex;
+  gap: 12px;
+}
+.auth-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.float-hand {
+  width: 44px;
+  margin-top: 10px;
+  pointer-events: none;
+  animation: bob 2.6s ease-in-out infinite;
+  filter: drop-shadow(0 6px 6px rgba(35, 31, 32, .12));
+}
+.float-hand.is-late { animation-delay: -1.3s; }   /* 두 손이 엇갈려 둥둥 */
+
+@keyframes bob {
+  0%, 100% { transform: translateY(0) rotate(-2deg); }
+  50%      { transform: translateY(-9px) rotate(2deg); }
+}
+/* 버튼에 마우스를 올리면 손이 살짝 콕! */
+.auth-item:hover .float-hand,
+.auth-item:focus-within .float-hand {
+  animation: poke .5s ease-in-out infinite alternate;
+}
+@keyframes poke {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-14px); }
+}
+
+/* ---------- 가운데: 로고 + 안내 문구 ---------- */
+.hero {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: clamp(4px, 2vh, 24px) 20px 0;
+}
+.logo {
+  margin: 0 auto;
+  width: min(440px, 72vw);
+  color: var(--blue);
+}
+.logo svg { width: 100%; height: auto; }
+
+.hero-sub {
+  margin: 22px 0 0;
+  font-size: clamp(16px, 1.5vw, 19px);
+  font-weight: 600;
+  line-height: 1.6;
+  color: var(--ink);
+}
+.hero-sub .point {
+  color: var(--blue);
+}
+.hero-soft {
+  margin: 6px 0 0;
+  font-size: clamp(14px, 1.2vw, 16px);
+  color: var(--ink-soft);
+}
+
+/* ---------- 아래: 파란 캐릭터 (눈이 마우스를 따라와요) ---------- */
+.buddy {
+  position: relative;
+  flex: 1;
+  min-height: 46vh;
+  margin-top: clamp(56px, 11vh, 120px);   /* 글씨와 캐릭터 사이 간격 */
+}
+.buddy-body {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: max(108vw, 760px);
+  height: max(64vw, 520px);
+  transform: translateX(-50%);
+  transform-origin: 50% 100%;
+  animation: breathe 5s ease-in-out infinite;
+}
+.buddy-body::before {          /* 시안처럼 가장자리가 부드럽게 번진 몸통 */
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--blue);
+  filter: blur(6px);
+}
+@keyframes breathe {
+  0%, 100% { transform: translateX(-50%) scale(1, 1); }
+  50%      { transform: translateX(-50%) scale(1.012, 1.03); }
+}
+
+.eyes {
+  position: absolute;
+  left: 50%;
+  top: clamp(70px, 9vw, 130px);
+  display: flex;
+  gap: clamp(54px, 7.5vw, 108px);
+  transform: translateX(-50%);
+}
+.eye {
+  position: relative;
+  width: clamp(76px, 9.5vw, 136px);       /* 눈 크기 */
+  aspect-ratio: 166 / 248;
+  border-radius: 50%;
+  background: var(--white);
+  overflow: hidden;
+  animation: blink 6s infinite;
+  transform-origin: 50% 50%;
+}
+.eye:nth-child(2) { animation-delay: .04s; }
+.pupil {
+  position: absolute;
+  left: 50%;
+  top: 30%;
+  width: 62%;
+  aspect-ratio: 103 / 111;
+  border-radius: 50%;
+  background: var(--ink);
+  transform: translate(calc(-50% + var(--px, 6%)), calc(-50% + var(--py, -4%)));
+  transition: transform .12s ease-out;
+}
+@keyframes blink {
+  0%, 92%, 100% { transform: scaleY(1); }
+  95%           { transform: scaleY(.08); }
+}
+
+/* ---------- 작은 화면 ---------- */
+@media (max-width: 640px) {
+  .topbar { grid-template-columns: auto 1fr auto; gap: 8px; }
+  .clock { font-size: 22px; margin-top: 12px; }
+  .auth { gap: 8px; }
+  .btn { padding: 0 16px; font-size: 15px; }
+  .float-hand { width: 36px; }
+  .hero { padding-top: 12px; }
+}
+@media (max-width: 380px) {
+  .clock { display: none; }
+}

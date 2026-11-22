@@ -1,0 +1,20 @@
+/* 기능 페이지 공통 (오늘의 나 · 챙기기 · 할 일 쪼개기 · 리포트) */
+.sub-top { align-items: center; }
+.home-btn { justify-self: start; }
+.sub-title { justify-self: end; font-weight: 800; color: var(--blue); }
+.sub-soon {
+  max-width: 560px;
+  margin: 4vh auto 64px;
+  padding: 0 20px;
+  text-align: center;
+}
+.sub-soon .badge { position: relative; width: 120px; height: 120px; margin: 0 auto 18px; display: grid; place-items: center; }
+.sub-soon .badge::before { content: ""; position: absolute; inset: 0; border-radius: 50%; background: var(--yellow); filter: blur(3px); }
+.sub-soon .badge img { position: relative; width: 58%; height: 58%; object-fit: contain; }
+.sub-soon h1 { margin: 0; font-size: clamp(26px, 3vw, 34px); }
+.sub-soon .lead { margin: 12px 0 22px; color: var(--ink-soft); line-height: 1.7; font-size: 16px; }
+.will { list-style: none; margin: 0 0 22px; padding: 18px 20px; border-radius: 24px; background: var(--blue-soft); text-align: left; display: grid; gap: 10px; }
+.will li { display: flex; gap: 10px; line-height: 1.5; }
+.will li::before { content: "✓"; color: var(--blue); font-weight: 800; }
+.note { color: var(--ink-soft); font-size: 14px; margin: 0 0 18px; }
+@media (max-width: 480px) { .sub-title { display: none; } .sub-top { grid-template-columns: auto 1fr; } .sub-top .clock { justify-self: end; } }

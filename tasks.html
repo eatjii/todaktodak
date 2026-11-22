@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>할 일 쪼개기 — 토닥토닥</title>
+  <link rel="icon" href="assets/symbol-heart.png" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/auth.css" />
+  <link rel="stylesheet" href="css/sub.css" />
+  <link rel="stylesheet" href="css/today.css" />
+  <link rel="stylesheet" href="css/tasks.css" />
+  <script src="js/store.js"></script>
+  <script>if (!TodakStore.currentUser()) location.replace("index.html#login");</script>
+</head>
+<body data-page="tasks" class="page-soft">
+  <header class="topbar sub-top">
+    <a class="btn btn-outline home-btn" href="main.html">← 메인으로</a>
+    <time class="clock" id="clock">7:57 AM</time>
+    <span></span>
+  </header>
+
+  <main class="today tasks">
+    <!-- 머리말 -->
+    <section class="today-hero">
+      <span class="hero-badge"><img src="assets/icons/hand-index-one.svg" alt="" /></span>
+      <h1>할 일 쪼개기</h1>
+      <p class="hero-q">큰 일도 하나씩, 작게 나누면 할 수 있어요</p>
+      <p class="lead">일정과 할 일을 한눈에 보고, 오늘 다 못 한 일은 내일로 미뤄도 괜찮아요.</p>
+    </section>
+
+    <!-- 캘린더 -->
+    <section class="card cal-card" aria-labelledby="cal-title">
+      <div class="cal-bar">
+        <div class="cal-nav">
+          <button type="button" class="nav-btn" id="prev" aria-label="이전">‹</button>
+          <h2 id="cal-title">2026년 11월</h2>
+          <button type="button" class="nav-btn" id="next" aria-label="다음">›</button>
+          <button type="button" class="btn btn-outline small" id="go-today">오늘</button>
+        </div>
+        <div class="view-toggle" role="group" aria-label="보기 방식">
+          <button type="button" data-view="month" aria-pressed="true">월</button>
+          <button type="button" data-view="week" aria-pressed="false">주</button>
+        </div>
+      </div>
+      <div class="legend" aria-hidden="true">
+        <span><i class="dot event"></i>일정</span>
+        <span><i class="dot task"></i>과제·할 일</span>
+        <span><i class="dot daily"></i>일상</span>
+        <span><i class="dot moved"></i>미룬 일</span>
+      </div>
+      <div id="calendar"></div>
+    </section>
+
+    <!-- 고른 날의 목록 -->
+    <section class="card day-panel" id="day-panel" aria-labelledby="day-title">
+      <div class="card-top">
+        <div>
+          <h2 id="day-title">11월 23일 (월)</h2>
+          <p class="act-reason" id="day-sub"></p>
+        </div>
+        <button type="button" class="btn btn-fill small add-btn" id="add-btn">+ 추가하기</button>
+      </div>
+
+      <div class="carry" id="carry" hidden>
+        <p id="carry-text"></p>
+        <div class="carry-btns">
+          <button type="button" class="btn btn-fill small" id="carry-yes">오늘로 미루기</button>
+          <button type="button" class="btn btn-ghost small" id="carry-no">괜찮아요</button>
+        </div>
+      </div>
+
+      <form class="quick" id="quick" novalidate>
+        <label class="sr-only" for="quick-text">빠르게 추가</label>
+        <input type="text" id="quick-text" maxlength="40" placeholder="빠르게 추가: 예) 보고서 자료 하나 찾기" />
+        <button type="submit" class="btn btn-outline">추가</button>
+      </form>
+
+      <div id="day-list"></div>
+    </section>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="js/common.js"></script>
+  <script src="js/tasks.js"></script>
+</body>
+</html>

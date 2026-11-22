@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>생활 리포트 — 토닥토닥</title>
+  <link rel="icon" href="assets/symbol-heart.png" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/sub.css" />
+  <link rel="stylesheet" href="css/today.css" />
+  <link rel="stylesheet" href="css/report.css" />
+  <script src="js/store.js"></script>
+  <script>if (!TodakStore.currentUser()) location.replace("index.html#login");</script>
+</head>
+<body data-page="report" class="page-soft">
+  <header class="topbar sub-top">
+    <a class="btn btn-outline home-btn" href="main.html">← 메인으로</a>
+    <time class="clock" id="clock">7:57 AM</time>
+    <span></span>
+  </header>
+
+  <main class="today report">
+    <!-- 머리말 -->
+    <section class="today-hero">
+      <span class="hero-badge"><img src="assets/icons/hand-high-five-pink.svg" alt="" /></span>
+      <h1>생활 리포트</h1>
+      <div class="seg" role="group" aria-label="보기 단위">
+        <button type="button" data-mode="week" aria-pressed="true">주간</button>
+        <button type="button" data-mode="month" aria-pressed="false">월간</button>
+      </div>
+      <div class="week-nav">
+        <button type="button" class="wk-btn" id="wk-prev" aria-label="이전 보기">‹</button>
+        <p class="hero-q" id="wk-range" aria-live="polite"></p>
+        <button type="button" class="wk-btn" id="wk-next" aria-label="다음 보기">›</button>
+      </div>
+      <p class="lead" id="wk-lead">한 주 동안 남긴 기록을 선으로 이어 봤어요. 빈 날이 있어도 괜찮아요.</p>
+      <div class="sum-chips" id="sum"></div>
+    </section>
+
+    <!-- 1. 오늘의 나 -->
+    <section class="card rp-card" aria-labelledby="rp-today">
+      <div class="card-top">
+        <div>
+          <h2 id="rp-today"><img class="h-icon" src="assets/icons/hand-ok.svg" alt="" />오늘의 나</h2>
+          <p class="act-reason" id="sub-today">하루 에너지와 집중력 (5단계, 하루 평균)</p>
+        </div>
+        <a class="go-link" href="today.html">기록하러 가기 →</a>
+      </div>
+      <div class="legend" id="lg-today"></div>
+      <p class="how month-only" hidden>옅은 점은 그날 기록, 선은 최근 7일 평균이에요.</p>
+      <div class="chart" id="ch-today"></div>
+      <div class="month-only" hidden>
+        <p class="sub-h">이번 달 기분 날씨</p>
+        <div class="moods" id="moods"></div>
+      </div>
+      <p class="insight" id="in-today"></p>
+      <details class="num-view"><summary>숫자로 보기</summary><div id="tb-today"></div></details>
+    </section>
+
+    <!-- 2. 챙기기 -->
+    <section class="card rp-card" aria-labelledby="rp-care">
+      <div class="card-top">
+        <div>
+          <h2 id="rp-care"><img class="h-icon" src="assets/icons/hand-clasp-pink.svg" alt="" />챙기기</h2>
+          <p class="act-reason">식사 · 물 · 수면<span id="care-med-label"> · 복약</span><span class="month-only" hidden> (괄호 안은 지난달과 비교)</span></p>
+          <p class="how month-only" style="margin-top:4px" hidden>옅은 점은 그날 기록, 선은 최근 7일 평균이에요.</p>
+        </div>
+        <a class="go-link" href="care.html">기록하러 가기 →</a>
+      </div>
+      <div class="minis" id="ch-care"></div>
+      <p class="insight" id="in-care"></p>
+      <details class="num-view"><summary>숫자로 보기</summary><div id="tb-care"></div></details>
+    </section>
+
+    <!-- 3. 할 일 쪼개기 -->
+    <section class="card rp-card" aria-labelledby="rp-tasks">
+      <div class="card-top">
+        <div>
+          <h2 id="rp-tasks"><img class="h-icon" src="assets/icons/hand-index-one.svg" alt="" />할 일 쪼개기</h2>
+          <p class="act-reason" id="sub-tasks">하루에 해야 했던 일과 끝낸 일 (일정은 빼고 과제·일상만)</p>
+        </div>
+        <a class="go-link" href="tasks.html">기록하러 가기 →</a>
+      </div>
+      <div class="legend" id="lg-tasks"></div>
+      <p class="how month-only" hidden>옅은 점은 그날 끝낸 일, 선은 최근 7일 평균이에요.</p>
+      <div class="chart" id="ch-tasks"></div>
+      <div class="month-only" hidden>
+        <p class="sub-h">주마다 끝낸 비율</p>
+        <div class="wk-rates" id="wk-rates"></div>
+      </div>
+      <p class="insight" id="in-tasks"></p>
+      <details class="num-view"><summary>숫자로 보기</summary><div id="tb-tasks"></div></details>
+    </section>
+  </main>
+
+  <script src="js/common.js"></script>
+  <script src="js/weather.js"></script>
+  <script src="js/med.js"></script>
+  <script src="js/report.js"></script>
+</body>
+</html>

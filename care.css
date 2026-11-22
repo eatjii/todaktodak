@@ -1,0 +1,253 @@
+/* =========================================================
+   챙기기 (식사 · 물 · 복약)
+   today.css의 공통 스타일(카드, 머리말, 토스트)을 함께 써요
+   ========================================================= */
+.care-sum { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; margin-top: 16px; }
+.care-sum span {
+  padding: 8px 14px;
+  border-radius: 99px;
+  background: var(--white);
+  box-shadow: 0 2px 8px rgba(7, 145, 254, .1);
+  font-size: 14px;
+  font-weight: 700;
+}
+.care-sum b { color: var(--blue); }
+
+.count-pill {
+  padding: 8px 14px;
+  border-radius: 99px;
+  background: var(--blue-soft);
+  color: var(--blue);
+  font-weight: 800;
+  font-size: 15px;
+  white-space: nowrap;
+}
+
+/* ---------- 식사 ---------- */
+.meals { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+.meal {
+  padding: 14px 16px;
+  border: 2px solid #e8eff6;
+  border-radius: 22px;
+  background: #fafcff;
+  transition: border-color .2s ease, background .2s ease;
+}
+.meal.is-done { border-color: #9fd2ff; background: var(--blue-soft); }
+.meal-row { display: flex; align-items: center; gap: 14px; }
+.check-btn {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border: 3px solid #c5cfd9;
+  border-radius: 50%;
+  background: var(--white);
+  color: transparent;
+  font: 800 22px var(--font-body);
+  transition: background .2s ease, border-color .2s ease, transform .2s cubic-bezier(.2, .9, .3, 1.4);
+}
+.check-btn:hover { border-color: var(--blue); }
+.check-btn[aria-pressed="true"] { background: var(--blue); border-color: var(--blue); color: var(--white); transform: scale(1.06); }
+.meal-info { flex: 1; min-width: 0; }
+.meal-info b { font-size: 17px; }
+.meal-info .time { margin-left: 6px; font-size: 13px; color: var(--ink-soft); }
+.meal-info p { margin: 3px 0 0; font-size: 14px; color: var(--ink-soft); line-height: 1.5; }
+.status {
+  flex: none;
+  padding: 6px 12px;
+  border-radius: 99px;
+  background: #eef2f6;
+  color: var(--ink-soft);
+  font-size: 13px;
+  font-weight: 700;
+}
+.meal.is-done .status { background: var(--blue); color: var(--white); }
+.food {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 12px 0 0 62px;
+}
+.food label { flex: none; font-size: 13px; font-weight: 700; color: var(--ink-soft); }
+.food input {
+  flex: 1;
+  min-width: 0;
+  height: 44px;
+  padding: 0 14px;
+  border: 2px solid #e5e9ee;
+  border-radius: 14px;
+  background: var(--white);
+  font: 500 15px var(--font-body);
+  color: var(--ink);
+}
+.food input:focus { outline: none; border-color: var(--blue); box-shadow: 0 0 0 4px rgba(7, 145, 254, .15); }
+.food .saved { flex: none; font-size: 12px; color: #2f9e44; opacity: 0; transition: opacity .2s ease; }
+.food .saved.show { opacity: 1; }
+
+.celebrate {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 14px;
+  padding: 16px 18px;
+  border-radius: 20px;
+  background: #fff6c2;
+  overflow: hidden;
+  animation: pop .45s cubic-bezier(.2, .9, .3, 1.4);
+}
+.celebrate[hidden] { display: none; }
+.celebrate img { width: 52px; height: 52px; animation: wiggle 1s ease-in-out 2; }
+.celebrate b { font-size: 17px; }
+.celebrate p { margin: 2px 0 0; font-size: 14px; color: var(--ink-soft); }
+@keyframes pop { from { opacity: 0; transform: scale(.9); } }
+@keyframes wiggle { 25% { transform: rotate(-12deg); } 75% { transform: rotate(12deg); } }
+
+.burst { position: fixed; inset: 0; pointer-events: none; z-index: 150; overflow: hidden; }
+.burst i {
+  position: absolute;
+  width: 10px;
+  height: 14px;
+  border-radius: 3px;
+  animation: burst 1.4s cubic-bezier(.2, .7, .3, 1) forwards;
+}
+@keyframes burst {
+  0% { transform: translate(0, 0) rotate(0); opacity: 1; }
+  100% { transform: translate(var(--dx), var(--dy)) rotate(var(--r)); opacity: 0; }
+}
+
+.tip { margin: 14px 0 0; padding: 12px 14px; border-radius: 16px; background: #f6f9fc; font-size: 14px; line-height: 1.55; color: var(--ink-soft); }
+
+/* ---------- 물 ---------- */
+.cups { display: grid; grid-template-columns: repeat(8, 1fr); gap: 8px; margin-bottom: 18px; }
+.cup {
+  position: relative;
+  height: 54px;
+  border: 3px solid #cfe6fb;
+  border-top: 0;
+  border-radius: 0 0 14px 14px;
+  overflow: hidden;
+  background: var(--white);
+}
+.cup::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 0;
+  background: linear-gradient(#5bb6ff, var(--blue));
+  transition: height .35s ease;
+}
+.cup.full::after { height: 82%; }
+.water-ctrl { display: flex; align-items: center; justify-content: center; gap: 24px; margin-bottom: 14px; }
+.round {
+  width: 56px;
+  height: 56px;
+  border: 2px solid #dbe9f7;
+  border-radius: 50%;
+  background: var(--white);
+  font: 700 26px var(--font-body);
+  color: var(--ink);
+}
+.round:hover { border-color: var(--blue); }
+.round.plus { background: var(--blue); border-color: var(--blue); color: var(--white); }
+.water-num { font-size: 18px; font-weight: 700; min-width: 90px; text-align: center; }
+.water-num b { font: 600 44px/1 var(--font-display); margin-right: 4px; color: var(--ink); }
+.water-note { min-height: 20px; margin: 10px 0 0; text-align: center; font-size: 14px; color: #2f7d1f; font-weight: 600; }
+
+/* ---------- 복약 ---------- */
+.meds { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.med {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 14px 16px;
+  border: 2px solid #e8eff6;
+  border-radius: 20px;
+  background: #fafcff;
+}
+.med.is-taken { border-color: #bfe6a8; background: #f4fbef; }
+.med .label { flex: 1; min-width: 140px; }
+.med .label b { font-size: 16px; }
+.med .label span { margin-left: 6px; font-size: 13px; color: var(--ink-soft); }
+.med .label p { margin: 2px 0 0; font-size: 13px; color: var(--ink-soft); }
+.med-btns { display: flex; gap: 8px; }
+.med-btns button {
+  min-height: 44px;
+  padding: 0 16px;
+  border: 2px solid #dbe3ec;
+  border-radius: 14px;
+  background: var(--white);
+  font: 700 14px var(--font-body);
+  color: var(--ink-soft);
+}
+.med-btns button[aria-pressed="true"][data-v="taken"] { background: #4caf50; border-color: #4caf50; color: var(--white); }
+.med-btns button[aria-pressed="true"][data-v="skip"] { background: #fff1d6; border-color: #f0c36b; color: #8a6400; }
+.med-off { text-align: center; font-size: 14px; color: var(--ink-soft); margin: 0; }
+
+/* ---------- 수면 ---------- */
+.sleep-slider { padding: 6px 4px 0; }
+#sleep-hours {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 12px;
+  border-radius: 99px;
+  background: linear-gradient(90deg, var(--blue) var(--fill, 58%), #e3eaf1 var(--fill, 58%));
+  outline: none;
+}
+#sleep-hours::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: var(--white);
+  border: 4px solid var(--blue);
+  box-shadow: 0 4px 10px rgba(7, 145, 254, .3);
+  cursor: var(--cursor-hover);
+}
+#sleep-hours::-moz-range-thumb {
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  background: var(--white);
+  border: 4px solid var(--blue);
+  cursor: var(--cursor-hover);
+}
+#sleep-hours:focus-visible { box-shadow: 0 0 0 4px rgba(255, 212, 0, .7); }
+.sleep-scale { display: flex; justify-content: space-between; margin-top: 8px; font-size: 12px; color: var(--ink-soft); }
+.sleep-comment { min-height: 22px; margin: 10px 0 4px; font-size: 15px; font-weight: 600; color: var(--ink); }
+.sleep-q { margin: 14px 0 8px; }
+.quality { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 14px; }
+.quality button {
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  padding: 12px 6px;
+  border: 2px solid #e8eff6;
+  border-radius: 18px;
+  background: var(--white);
+  font: 700 14px var(--font-body);
+  color: var(--ink);
+}
+.quality button span { font-size: 26px; line-height: 1; }
+.quality button:hover { border-color: #9fd2ff; }
+.quality button[aria-checked="true"] { border-color: var(--blue); background: var(--blue-soft); }
+
+/* ---------- 복약 시간 바꾸기 ---------- */
+.med-head-right { display: flex; align-items: center; gap: 8px; }
+.med-edit { margin-bottom: 16px; padding: 16px; border-radius: 20px; background: #f6f9fc; }
+.med-edit[hidden] { display: none; }
+.med-edit-title { margin: 0 0 10px; font-weight: 800; font-size: 15px; }
+.med-edit-title small { display: block; margin-top: 2px; font-weight: 500; font-size: 12px; color: var(--ink-soft); }
+.med-edit-btns { display: flex; justify-content: flex-end; gap: 8px; margin-top: 12px; }
+.med-edit-btns .btn { min-height: 44px; }
+.meds .empty { padding: 14px; border-radius: 16px; background: #f6f9fc; font-size: 14px; color: var(--ink-soft); text-align: center; }
+
+@media (max-width: 760px) {
+  .food { margin-left: 0; flex-wrap: wrap; }
+  .food label { width: 100%; }
+  .food input { flex-basis: 100%; }
+  .cups { grid-template-columns: repeat(8, 1fr); gap: 5px; }
+  .cup { height: 40px; border-width: 2px; border-radius: 0 0 10px 10px; }
+  .meal-info .time { display: block; margin: 2px 0 0; }
+  .status { display: none; }
+  .mt-time { width: 110px; }
+}

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>오늘의 토닥토닥</title>
+  <link rel="icon" href="assets/symbol-heart.png" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/auth.css" />
+  <link rel="stylesheet" href="css/main.css" />
+  <script src="js/store.js"></script>
+  <script>
+    // 로그인하지 않았으면 로그인 창으로 보내요
+    if (!TodakStore.currentUser()) location.replace("index.html#login");
+  </script>
+  <script src="js/layout/layout-main.js"></script>
+  <script src="js/layout.js"></script>
+</head>
+<body data-page="main">
+
+  <header class="topbar">
+    <a class="brand-stack" href="main.html" aria-label="토닥토닥 메인" data-edit="심볼">
+      <img class="symbol" src="assets/symbol-heart.png" alt="" />
+      <img class="wordmark" src="assets/logo-todaktodak-blue.svg" alt="" />
+    </a>
+
+    <time class="clock" id="clock" data-edit="시계">7:57 AM</time>
+
+    <div class="account-bar">
+      <button type="button" class="btn-logout" data-logout data-edit="로그아웃 버튼">로그아웃</button>
+      <button type="button" class="profile-chip" id="profile-btn" aria-haspopup="true" aria-expanded="false" aria-controls="profile-menu" data-edit="프로필">
+        <span class="profile-avatar" data-avatar><img src="assets/icons/hand-palm.svg" alt="" /></span>
+        <span class="profile-name" data-nick>친구</span>
+        <span class="caret" aria-hidden="true">▾</span>
+      </button>
+
+      <div class="profile-menu" id="profile-menu" role="menu" hidden>
+        <div class="pm-head">
+          <span class="profile-avatar" data-avatar><img src="assets/icons/hand-palm.svg" alt="" /></span>
+          <div><b data-nick>친구</b><small data-email></small></div>
+        </div>
+        <button type="button" class="pm-item" role="menuitem" data-open="profile">
+          <img src="assets/icons/hand-gun.svg" alt="" /><span class="grow">프로필 변경<small>프로필 사진과 닉네임을 바꿀 수 있어요</small></span>
+        </button>
+        <button type="button" class="pm-item" role="menuitem" data-open="guide">
+          <img src="assets/icons/hand-index-one.svg" alt="" /><span class="grow">간단한 사용설명 보기<small>1분이면 다 볼 수 있어요</small></span>
+        </button>
+        <button type="button" class="pm-item" role="menuitemcheckbox" aria-checked="false" id="med-toggle">
+          <img src="assets/icons/hand-clasp-pink.svg" alt="" /><span class="grow">복약 기능<small id="med-sub">꺼져 있어요</small></span><span class="switch" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="pm-item" role="menuitem" data-open="med">
+          <img src="assets/icons/hand-thumbs-up.svg" alt="" /><span class="grow">복약 시간 설정<small>약 먹는 시간을 직접 정해요</small></span>
+        </button>
+        <button type="button" class="pm-item help" role="menuitem" data-open="help">
+          <img src="assets/icons/hand-heart-pink.svg" alt="" /><span class="grow">힘들 때 도움받을 곳<small>24시간 상담 전화</small></span>
+        </button>
+        <button type="button" class="pm-item logout-m" role="menuitem" data-logout>
+          <img src="assets/icons/hand-palm.svg" alt="" /><span class="grow">로그아웃</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- 가장 중요한 기능 3개 -->
+  <nav aria-label="주요 기능">
+    <ul class="features">
+      <li>
+        <a class="feature" href="today.html" data-edit="노란 원 1">
+          <span class="circle"><img src="assets/icons/hand-ok.svg" alt="" /></span>
+          <span class="feature-label">오늘의 나</span>
+          <span class="feature-desc">기분 체크 · 작은 행동</span>
+        </a>
+      </li>
+      <li>
+        <a class="feature" href="care.html" data-edit="노란 원 2">
+          <span class="circle"><img src="assets/icons/hand-clasp-pink.svg" alt="" /></span>
+          <span class="feature-label">챙기기</span>
+          <span class="feature-desc" id="care-desc">식사 · 복약</span>
+        </a>
+      </li>
+      <li>
+        <a class="feature" href="tasks.html" data-edit="노란 원 3">
+          <span class="circle"><img src="assets/icons/hand-index-one.svg" alt="" /></span>
+          <span class="feature-label">할 일 쪼개기</span>
+          <span class="feature-desc">하나씩 · 다시 시작</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- 파란 캐릭터 + 인사 -->
+  <div class="blue-zone">
+  <div class="blue-shape" aria-hidden="true" data-edit="캐릭터"></div>
+  <section class="buddy-main" aria-label="오늘의 인사">
+    <div class="eyes" aria-hidden="true" data-edit="눈">
+      <div class="eye"><div class="pupil"></div></div>
+      <div class="eye"><div class="pupil"></div></div>
+    </div>
+    <div class="buddy-talk" data-edit="인사 문구">
+      <p class="greet" id="greet">반가워요!</p>
+      <p class="sub" id="greet-sub">오늘은 어떤 작은 걸 해 볼까요?<br />노란 동그라미를 눌러 시작해 보세요.</p>
+      <a class="scroll-hint" href="#timer">타이머와 이번 주 리포트 보기 ↓</a>
+    </div>
+  </section>
+
+  <main class="main-sections">
+    <!-- 타이머 -->
+    <section class="card timer-card" id="timer" aria-labelledby="timer-title" data-edit="타이머 카드">
+      <div class="card-head">
+        <span class="mini-circle"><img src="assets/icons/hand-index-one.svg" alt="" /></span>
+        <div>
+          <h2 id="timer-title">집중 타이머</h2>
+          <p>딱 3분만 해 보고 멈춰도 성공이에요.</p>
+        </div>
+      </div>
+      <div class="timer-body">
+        <div class="timer-ring">
+          <svg viewBox="0 0 200 200" aria-hidden="true">
+            <circle class="track" cx="100" cy="100" r="88" />
+            <circle class="bar" cx="100" cy="100" r="88" />
+          </svg>
+          <div class="timer-center">
+            <div class="timer-time" id="t-time">03:00</div>
+            <div class="timer-state" id="t-state">버튼 하나로 바로 시작해요</div>
+          </div>
+        </div>
+        <div class="timer-controls">
+          <div class="preset-row" role="group" aria-label="빠르게 시작">
+            <button type="button" class="preset" data-min="3">3분<small>가볍게</small></button>
+            <button type="button" class="preset" data-min="5">5분<small>조금만</small></button>
+            <button type="button" class="preset" data-min="10">10분<small>한 걸음</small></button>
+            <button type="button" class="preset" data-min="30">30분<small>푹 집중</small></button>
+          </div>
+          <div class="custom-row">
+            <span class="lbl">직접 정하기</span>
+            <span class="stepper">
+              <button type="button" id="c-minus" aria-label="1분 줄이기">−</button>
+              <input type="number" id="c-min" value="15" min="1" max="180" inputmode="numeric" aria-label="분" />
+              <button type="button" id="c-plus" aria-label="1분 늘리기">+</button>
+            </span>
+            <span>분</span>
+            <button type="button" class="btn btn-outline" id="c-start">시작</button>
+          </div>
+          <div class="run-row" id="run-row" hidden>
+            <button type="button" class="btn btn-fill" id="t-pause">잠깐 멈추기</button>
+            <button type="button" class="btn btn-outline" id="t-stop">그만하기</button>
+          </div>
+          <div class="timer-done" id="t-done" role="status" hidden>
+            <img src="assets/icons/hand-thumbs-up.svg" alt="" />
+            <div><b id="t-done-title">해냈어요!</b><p id="t-done-text">작은 시작이 쌓이고 있어요.</p></div>
+            <div class="acts">
+              <button type="button" class="btn btn-fill" id="t-more">5분 더 하기</button>
+              <button type="button" class="btn btn-outline" id="t-rest">쉬기</button>
+            </div>
+          </div>
+          <p class="timer-note">중간에 멈춰도 한 만큼 리포트에 기록돼요.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 주간 생활 리포트 요약 -->
+    <a class="card report-card" href="report.html" aria-labelledby="report-title" data-edit="리포트 카드">
+      <div class="card-head">
+        <span class="mini-circle"><img src="assets/icons/hand-high-five-pink.svg" alt="" /></span>
+        <div>
+          <h2 id="report-title">이번 주 생활 리포트</h2>
+          <p id="week-range"></p>
+        </div>
+        <span class="more">자세히 보기 →</span>
+      </div>
+      <div class="week" id="week"></div>
+      <div class="stats">
+        <div class="stat"><b id="s-min">0분</b><span>집중한 시간</span></div>
+        <div class="stat"><b id="s-done">0번</b><span>타이머 완료</span></div>
+        <div class="stat"><b id="s-water">0잔</b><span>마신 물</span></div>
+        <div class="stat"><b id="s-days">0일</b><span>함께한 날</span></div>
+      </div>
+      <p class="report-msg"><img src="assets/icons/hand-heart-pink.svg" alt="" /><span id="report-msg"></span></p>
+    </a>
+
+    <p class="help-line">
+      많이 힘들 땐 혼자 버티지 않아도 괜찮아요.<br />
+      <a href="tel:109">자살예방상담 109</a> · <a href="tel:15770199">정신건강상담 1577-0199</a> (24시간)
+    </p>
+  </main>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="js/common.js"></script>
+  <script src="js/landing.js"></script>
+  <script src="js/med.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/timer.js"></script>
+  <script src="js/edit-mode.js"></script>
+</body>
+</html>
